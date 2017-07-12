@@ -32,6 +32,8 @@ Fetch the client kubernetes configuration file:
 gcloud compute scp kubeadm-single-node-cluster:/etc/kubernetes/admin.conf kubeadm-single-node-cluster.conf
 ```
 
+> It may take a few minutes for the cluster to finish bootstrapping and the client config to become readable.
+
 Set the `kubeadm-single-node-cluster` kubeconfig server address to the public IP address:
 
 ```
