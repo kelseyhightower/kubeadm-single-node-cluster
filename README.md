@@ -31,3 +31,13 @@ Fetch the client kubernetes configuration file:
 ```
 gcloud compute scp kubeadm-single-node-cluster:~/.kube/config kubeadm-single-node-cluster.conf
 ```
+
+## Cleanup
+
+```
+gcloud compute instances delete kubeadm-single-node-cluster
+```
+
+```
+gcloud compute firewall-rules delete default-allow-kubeadm-single-node-cluster
+```
