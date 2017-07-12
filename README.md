@@ -29,7 +29,7 @@ gcloud compute firewall-rules create default-allow-kubeadm-single-node-cluster \
 Fetch the client kubernetes configuration file:
 
 ```
-gcloud compute scp kubeadm-single-node-cluster:~/.kube/config kubeadm-single-node-cluster.conf
+gcloud compute scp kubeadm-single-node-cluster:/etc/kubernetes/admin.conf kubeadm-single-node-cluster.conf
 ```
 
 ## Cleanup

@@ -22,9 +22,11 @@ sudo kubeadm init \
   --apiserver-cert-extra-sans ${EXTERNAL_IP} \
   --kubernetes-version stable-1.7
 
-sudo kubectl taint nodes --all node-role.kubernetes.io/master- \
+sudo chmod 644 /etc/kubernetes/admin.conf
+
+kubectl taint nodes --all node-role.kubernetes.io/master- \
   --kubeconfig /etc/kubernetes/admin.conf
 
-sudo kubectl apply \
+kubectl apply \
   -f http://docs.projectcalico.org/v2.3/getting-started/kubernetes/installation/hosted/kubeadm/1.6/calico.yaml \
   --kubeconfig /etc/kubernetes/admin.conf
