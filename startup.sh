@@ -18,9 +18,12 @@ sudo systemctl enable docker.service
 EXTERNAL_IP=$(curl -s -H "Metadata-Flavor: Google" \
   http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip)
 
+KUBERNETES_VERSION=$(curl -s -H "Metadata-Flavor: Google" \
+  http://metadata.google.internal/computeMetadata/v1/instance/attributes/kubernetes-version)
+
 sudo kubeadm init \
   --apiserver-cert-extra-sans ${EXTERNAL_IP} \
-  --kubernetes-version stable-1.7
+  --kubernetes-version ${KUBERNETES_VERSION}
 
 sudo chmod 644 /etc/kubernetes/admin.conf
 

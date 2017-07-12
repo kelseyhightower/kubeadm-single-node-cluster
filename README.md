@@ -12,6 +12,7 @@ gcloud compute instances create kubeadm-single-node-cluster \
   --image-family ubuntu-1704 \
   --image-project ubuntu-os-cloud \
   --machine-type n1-standard-4 \
+  --metadata kubernetes-version=stable-1.7 \
   --metadata startup-script-url=https://raw.githubusercontent.com/kelseyhightower/kubeadm-single-node-cluster/master/startup.sh \
   --tags kubeadm-single-node-cluster \
   --scopes cloud-platform,logging-write
