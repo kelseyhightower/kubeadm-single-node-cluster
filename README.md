@@ -29,7 +29,8 @@ gcloud compute firewall-rules create default-allow-kubeadm-single-node-cluster \
 Fetch the client kubernetes configuration file:
 
 ```
-gcloud compute scp kubeadm-single-node-cluster:/etc/kubernetes/admin.conf kubeadm-single-node-cluster.conf
+gcloud compute scp kubeadm-single-node-cluster:/etc/kubernetes/admin.conf \
+  kubeadm-single-node-cluster.conf
 ```
 
 > It may take a few minutes for the cluster to finish bootstrapping and the client config to become readable.
