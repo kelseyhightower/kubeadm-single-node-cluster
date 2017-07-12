@@ -15,20 +15,33 @@ sudo apt-get install -y kubelet kubeadm
 
 sudo systemctl enable docker.service
 
+cat <<EOF > 20-cloud-provider.conf
+Environment="KUBELET_EXTRA_ARGS=--cloud-provider=gce"
+EOF
+
+sudo mv 20-cloud-provider.conf /etc/systemd/system/kubelet.service.d/
+systemctl daemon-reload
+systemctl restart kubelet
+
+EXTERNAL_IP=$(curl -s -H "Metadata-Flavor: Google" \
+  http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip)
+INTERNAL_IP=$(curl -s -H "Metadata-Flavor: Google" \
+  http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ip)
+
 cat <<EOF > kubeadm.conf
 kind: MasterConfiguration
 apiVersion: kubeadm.k8s.io/v1alpha1
 cloudProvider: gce
+apiServerCertSANs:
+  - 10.96.0.1
+  - ${EXTERNAL_IP}
+  - ${INTERNAL_IP}
 EOF
-
-EXTERNAL_IP=$(curl -s -H "Metadata-Flavor: Google" \
-  http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip)
 
 KUBERNETES_VERSION=$(curl -s -H "Metadata-Flavor: Google" \
   http://metadata.google.internal/computeMetadata/v1/instance/attributes/kubernetes-version)
 
 sudo kubeadm init \
-  --apiserver-cert-extra-sans ${EXTERNAL_IP} \
   --config=kubeadm.conf \
   --kubernetes-version ${KUBERNETES_VERSION}
 
