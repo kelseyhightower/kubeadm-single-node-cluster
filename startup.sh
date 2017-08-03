@@ -31,19 +31,21 @@ INTERNAL_IP=$(curl -s -H "Metadata-Flavor: Google" \
 cat <<EOF > kubeadm.conf
 kind: MasterConfiguration
 apiVersion: kubeadm.k8s.io/v1alpha1
-cloudProvider: gce
 apiServerCertSANs:
   - 10.96.0.1
   - ${EXTERNAL_IP}
   - ${INTERNAL_IP}
+apiServerExtraArgs:
+  runtime-config: api/all
+  admission-control: PodPreset,Initializers,NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,ResourceQuota
+cloudProvider: gce
+kubernetesVersion: stable-1.7
 EOF
 
 KUBERNETES_VERSION=$(curl -s -H "Metadata-Flavor: Google" \
   http://metadata.google.internal/computeMetadata/v1/instance/attributes/kubernetes-version)
 
-sudo kubeadm init \
-  --config=kubeadm.conf \
-  --kubernetes-version ${KUBERNETES_VERSION}
+sudo kubeadm init --config=kubeadm.conf
 
 sudo chmod 644 /etc/kubernetes/admin.conf
 
