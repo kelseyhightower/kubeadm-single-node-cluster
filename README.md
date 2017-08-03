@@ -44,31 +44,34 @@ kubectl config set-cluster kubernetes \
      --format='value(networkInterfaces.accessConfigs[0].natIP)'):6443
 ```
 
+Set the `KUBECONFIG` env var to point to the `kubeadm-single-node-cluster.conf` kubeconfig:
+
+```
+export KUBECONFIG=$(PWD)/kubeadm-single-node-cluster.conf
+```
+
 ## Verification
 
 List the Kubernetes nodes:
 
 ```
-kubectl get nodes --kubeconfig kubeadm-single-node-cluster.conf
+kubectl get nodes
 ```
 ``` 
 NAME                          STATUS    AGE       VERSION
-kubeadm-single-node-cluster   Ready     14m       v1.7.0
+kubeadm-single-node-cluster   Ready     14m       v1.7.2
 ```
 
 Create a nginx deployment:
 
 ```
-kubectl run nginx --image nginx:1.13 --port 80 \
-  --kubeconfig kubeadm-single-node-cluster.conf
+kubectl run nginx --image nginx:1.13 --port 80
 ```
 
 Expose the nginx deployment:
 
 ```
-kubectl expose deployment nginx \
-  --type LoadBalancer \
-  --kubeconfig kubeadm-single-node-cluster.conf
+kubectl expose deployment nginx --type LoadBalancer
 ```
 
 ## Cleanup
