@@ -87,3 +87,18 @@ gcloud compute firewall-rules delete default-allow-kubeadm-single-node-cluster
 ```
 rm kubeadm-single-node-cluster.conf
 ```
+
+## Using PWK (Play with K8s)
+
+Head to http://play-with-k8s.com, pass the captcha and copy the session URL.
+
+Call the `startup_pwd.sh`  script with the copied URL. i.e:
+
+```
+./startup_pwd.sh http://host1.labs.play-with-k8s.com/p/a17af719-5502-4332-b791-af1f81b31c26
+```
+
+It shouldn't take more than 30s to initialize your cluster. Once it's done, you can use your `kubectl`
+client locally without using any config file to interact with your cluster. If you create a pod and expose a 
+a deployment, you can access it through the PWK web interface. 
+
