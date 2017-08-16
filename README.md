@@ -59,7 +59,7 @@ kubectl get nodes
 ```
 ``` 
 NAME                          STATUS    AGE       VERSION
-kubeadm-single-node-cluster   Ready     14m       v1.7.2
+kubeadm-single-node-cluster   Ready     51s       v1.7.3
 ```
 
 Create a nginx deployment:
