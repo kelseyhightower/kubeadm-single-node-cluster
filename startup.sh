@@ -40,6 +40,8 @@ apiServerExtraArgs:
   admission-control: PodPreset,Initializers,NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,ResourceQuota
 cloudProvider: gce
 kubernetesVersion: stable-1.7
+networking:
+  podSubnet: 192.168.0.0/16
 EOF
 
 KUBERNETES_VERSION=$(curl -s -H "Metadata-Flavor: Google" \
@@ -53,5 +55,5 @@ kubectl taint nodes --all node-role.kubernetes.io/master- \
   --kubeconfig /etc/kubernetes/admin.conf
 
 kubectl apply \
-  -f http://docs.projectcalico.org/v2.3/getting-started/kubernetes/installation/hosted/kubeadm/1.6/calico.yaml \
+  -f http://docs.projectcalico.org/v2.4/getting-started/kubernetes/installation/hosted/kubeadm/1.6/calico.yaml \
   --kubeconfig /etc/kubernetes/admin.conf
