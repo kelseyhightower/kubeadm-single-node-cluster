@@ -6,7 +6,7 @@ This tutorial will walk you through bootstrapping a single-node Kubernetes clust
 
 Create a single compute instance:
 
-```
+```bash
 gcloud compute instances create kubeadm-single-node-cluster \
   --can-ip-forward \
   --image-family ubuntu-1704 \
