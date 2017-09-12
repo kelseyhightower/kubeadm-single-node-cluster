@@ -35,6 +35,12 @@ gcloud compute scp kubeadm-single-node-cluster:/etc/kubernetes/admin.conf \
 
 > It may take a few minutes for the cluster to finish bootstrapping and the client config to become readable.
 
+Set the `KUBECONFIG` env var to point to the `kubeadm-single-node-cluster.conf` kubeconfig:
+
+```
+export KUBECONFIG=$(PWD)/kubeadm-single-node-cluster.conf
+```
+
 Set the `kubeadm-single-node-cluster` kubeconfig server address to the public IP address:
 
 ```
@@ -42,12 +48,6 @@ kubectl config set-cluster kubernetes \
   --kubeconfig kubeadm-single-node-cluster.conf \
   --server https://$(gcloud compute instances describe kubeadm-single-node-cluster \
      --format='value(networkInterfaces.accessConfigs[0].natIP)'):6443
-```
-
-Set the `KUBECONFIG` env var to point to the `kubeadm-single-node-cluster.conf` kubeconfig:
-
-```
-export KUBECONFIG=$(PWD)/kubeadm-single-node-cluster.conf
 ```
 
 ## Verification
