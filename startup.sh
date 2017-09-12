@@ -1,4 +1,6 @@
 #! /bin/bash
+set -e
+set -x
 
 sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
@@ -27,6 +29,8 @@ EXTERNAL_IP=$(curl -s -H "Metadata-Flavor: Google" \
   http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip)
 INTERNAL_IP=$(curl -s -H "Metadata-Flavor: Google" \
   http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ip)
+KUBERNETES_VERSION=$(curl -s -H "Metadata-Flavor: Google" \
+  http://metadata.google.internal/computeMetadata/v1/instance/attributes/kubernetes-version)
 
 cat <<EOF > kubeadm.conf
 kind: MasterConfiguration
@@ -39,13 +43,10 @@ apiServerExtraArgs:
   runtime-config: api/all,admissionregistration.k8s.io/v1alpha1
   admission-control: PodPreset,Initializers,NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,ResourceQuota
 cloudProvider: gce
-kubernetesVersion: stable-1.7
+kubernetesVersion: ${KUBERNETES_VERSION}
 networking:
   podSubnet: 192.168.0.0/16
 EOF
-
-KUBERNETES_VERSION=$(curl -s -H "Metadata-Flavor: Google" \
-  http://metadata.google.internal/computeMetadata/v1/instance/attributes/kubernetes-version)
 
 sudo kubeadm init --config=kubeadm.conf
 
