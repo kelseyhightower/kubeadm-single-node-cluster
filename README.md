@@ -62,6 +62,19 @@ NAME                          STATUS    AGE       VERSION
 kubeadm-single-node-cluster   Ready     51s       v1.7.3
 ```
 
+The node version reflects the `kubelet` version, therefore it might be different
+than the `kubernetes-version` specified above.
+
+Find out Kubernetes API server version:
+
+```
+kubectl version --short
+```
+```
+Client Version: v1.7.4
+Server Version: v1.8.0-beta.1
+```
+
 Create a nginx deployment:
 
 ```
