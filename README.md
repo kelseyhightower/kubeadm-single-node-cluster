@@ -12,7 +12,8 @@ gcloud compute instances create kubeadm-single-node-cluster \
   --image-family ubuntu-1704 \
   --image-project ubuntu-os-cloud \
   --machine-type n1-standard-4 \
-  --metadata kubernetes-version=stable-1.8,startup-script-url=https://raw.githubusercontent.com/kelseyhightower/kubeadm-single-node-cluster/master/startup.sh \
+  --metadata kubernetes-version=stable-1.8 \
+  --metadata-from-file startup-script=startup.sh \
   --tags kubeadm-single-node-cluster \
   --scopes cloud-platform,logging-write
 ```
@@ -58,8 +59,8 @@ List the Kubernetes nodes:
 kubectl get nodes
 ```
 ``` 
-NAME                          STATUS    AGE       VERSION
-kubeadm-single-node-cluster   Ready     51s       v1.7.3
+NAME                          STATUS    ROLES     AGE       VERSION
+kubeadm-single-node-cluster   Ready     master    35m       v1.8.0
 ```
 
 The node version reflects the `kubelet` version, therefore it might be different
@@ -71,8 +72,8 @@ Find out Kubernetes API server version:
 kubectl version --short
 ```
 ```
-Client Version: v1.7.4
-Server Version: v1.8.0-beta.1
+Client Version: v1.8.0
+Server Version: v1.8.0
 ```
 
 Create a nginx deployment:

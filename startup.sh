@@ -25,26 +25,6 @@ sudo mv 20-cloud-provider.conf /etc/systemd/system/kubelet.service.d/
 systemctl daemon-reload
 systemctl restart kubelet
 
-ENCRYPTION_KEY=$(head -c 32 /dev/urandom | base64)
-cat > encryption-config.yaml <<EOF
-kind: EncryptionConfig
-apiVersion: v1
-resources:
-  - resources:
-      - secrets
-    providers:
-      - aescbc:
-          keys:
-            - name: key1
-              secret: ${ENCRYPTION_KEY}
-      - identity: {}
-EOF
-
-mkdir -p /var/lib/kubernetes/
-
-mv encryption-config.yaml /var/lib/kubernetes/
-
-
 EXTERNAL_IP=$(curl -s -H "Metadata-Flavor: Google" \
   http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip)
 INTERNAL_IP=$(curl -s -H "Metadata-Flavor: Google" \
@@ -61,7 +41,6 @@ apiServerCertSANs:
   - ${INTERNAL_IP}
 apiServerExtraArgs:
   admission-control: PodPreset,Initializers,GenericAdmissionWebhook,NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,ResourceQuota
-  experimental-encryption-provider-config: /var/lib/kubernetes/encryption-config.yaml
   feature-gates: AllAlpha=true
   runtime-config: api/all
 cloudProvider: gce
