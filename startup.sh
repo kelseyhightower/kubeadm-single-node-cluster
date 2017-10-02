@@ -40,6 +40,8 @@ resources:
       - identity: {}
 EOF
 
+mkdir -p /var/lib/kubernetes/
+
 mv encryption-config.yaml /var/lib/kubernetes/
 
 
