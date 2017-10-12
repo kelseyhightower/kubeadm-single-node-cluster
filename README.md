@@ -39,7 +39,7 @@ gcloud compute scp kubeadm-single-node-cluster:/etc/kubernetes/admin.conf \
 Set the `KUBECONFIG` env var to point to the `kubeadm-single-node-cluster.conf` kubeconfig:
 
 ```
-export KUBECONFIG=$(PWD)/kubeadm-single-node-cluster.conf
+export KUBECONFIG=${PWD}/kubeadm-single-node-cluster.conf
 ```
 
 Set the `kubeadm-single-node-cluster` kubeconfig server address to the public IP address:
