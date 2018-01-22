@@ -9,7 +9,7 @@ Create a single compute instance:
 ```bash
 gcloud compute instances create kubeadm-single-node-cluster \
   --can-ip-forward \
-  --image-family ubuntu-1704 \
+  --image-family ubuntu-1710 \
   --image-project ubuntu-os-cloud \
   --machine-type n1-standard-4 \
   --metadata kubernetes-version=stable-1.8 \
