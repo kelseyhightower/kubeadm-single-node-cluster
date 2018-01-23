@@ -18,6 +18,7 @@ sudo apt-get install -y kubelet kubeadm
 sudo systemctl enable docker.service
 
 cat <<EOF > 20-cloud-provider.conf
+[Service]
 Environment="KUBELET_EXTRA_ARGS=--cloud-provider=gce"
 EOF
 
