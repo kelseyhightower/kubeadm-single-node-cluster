@@ -9,10 +9,10 @@ Create a single compute instance:
 ```bash
 gcloud compute instances create kubeadm-single-node-cluster \
   --can-ip-forward \
-  --image-family ubuntu-1704 \
+  --image-family ubuntu-1804-lts \
   --image-project ubuntu-os-cloud \
   --machine-type n1-standard-4 \
-  --metadata kubernetes-version=stable-1.8 \
+  --metadata kubernetes-version=stable-1.10 \
   --metadata-from-file startup-script=startup.sh \
   --tags kubeadm-single-node-cluster \
   --scopes cloud-platform,logging-write
@@ -72,8 +72,8 @@ Find out Kubernetes API server version:
 kubectl version --short
 ```
 ```
-Client Version: v1.8.0
-Server Version: v1.8.0
+Client Version: v1.10.3
+Server Version: v1.10.3
 ```
 
 Create a nginx deployment:
